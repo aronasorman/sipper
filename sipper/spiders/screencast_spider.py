@@ -69,7 +69,7 @@ class ScreencastSpider(Spider):
             if not entry_name or not'.mp4' in entry_name[0]:
                 continue
             else:
-                item['video'] = node.xpath('a/@href').extract()[0]
-                item['title'] = self.root_url + sel.xpath('//div[@class="section-header order"]/h2/text()').extract()[0]
+                item['video'] = self.root_url + node.xpath('a/@href').extract()[0]
+                item['title'] = sel.xpath('//div[@class="section-header order"]/h2/text()').extract()[0]
                 break
         return item
