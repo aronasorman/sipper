@@ -8,6 +8,11 @@
 import os
 import yaml
 
+AUTH_FILE = os.path.join(os.path.dirname(__file__), '..', 'auth.yml')
+with open(AUTH_FILE) as f:
+    yamlvalues = yaml.load(f.read())
+
+
 BOT_NAME = 'sipper'
 
 SPIDER_MODULES = ['sipper.spiders']
@@ -19,11 +24,8 @@ ITEM_PIPELINES = {
 }
 
 # load the credentials
-AUTH_FILE = os.path.join(os.path.dirname(__file__), '..', 'auth.yml')
-
-with open(AUTH_FILE) as f:
-    CREDENTIALS = yaml.load(f.read())
-
+USERNAME = yamlvalues['username']
+PASSWORD = yamlvalues['password']
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'a (+http://www.yourdomain.com)'

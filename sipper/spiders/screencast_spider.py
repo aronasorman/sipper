@@ -19,8 +19,8 @@ class ScreencastSpider(Spider):
             FormRequest.from_response(
                 response,
                 formdata={
-                    'username': settings.CREDENTIALS['username'],
-                    'password': settings.CREDENTIALS['password']
+                    'username': settings.USERNAME,
+                    'password': settings.PASSWORD,
                 },
             callback=self.after_login,
             )]
