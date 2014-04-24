@@ -1,20 +1,12 @@
 import logging
-import os
 import urlparse
-import yaml
 
 from scrapy.http import FormRequest, Request
 from scrapy.selector import Selector
 from scrapy.spider import Spider
 
+from sipper import settings
 from sipper.items import Screencast
-
-
-# load the credentials
-auth_file = os.path.join(os.path.dirname(__file__), '..', '..', 'auth.yml')
-
-with open(auth_file) as f:
-    credentials = yaml.load(f.read())
 
 
 class ScreencastSpider(Spider):
@@ -27,8 +19,8 @@ class ScreencastSpider(Spider):
             FormRequest.from_response(
                 response,
                 formdata={
-                    'username': credentials['username'],
-                    'password': credentials['password']
+                    'username': settings.CREDENTIALS['username'],
+                    'password': settings.CREDENTIALS['password']
                 },
             callback=self.after_login,
             )]
