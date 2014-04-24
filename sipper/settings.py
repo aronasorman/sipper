@@ -27,5 +27,6 @@ ITEM_PIPELINES = {
 USERNAME = yamlvalues['username']
 PASSWORD = yamlvalues['password']
 
+DOWNLOAD_PATH = yamlvalues.get('download_path') or os.path.join(os.path.dirname(__file__), '..', 'videos')
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'a (+http://www.yourdomain.com)'
