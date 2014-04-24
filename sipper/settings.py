@@ -19,8 +19,6 @@ SPIDER_MODULES = ['sipper.spiders']
 NEWSPIDER_MODULE = 'sipper.spiders'
 
 ITEM_PIPELINES = {
-    'sipper.pipelines.AlreadyDownloadedFilter': 300,
-    'sipper.pipelines.DownloadPipeline': 500,
 }
 
 # load the credentials

@@ -8,3 +8,7 @@ from scrapy.item import Item, Field
 class Screencast(Item):
     title = Field()
     video = Field()
+
+
+    def video_name(self):
+        return "%s.mp4" % self['title']

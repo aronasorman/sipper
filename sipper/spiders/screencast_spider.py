@@ -1,4 +1,5 @@
 import logging
+import os
 import urlparse
 
 from scrapy.http import FormRequest, Request
@@ -64,4 +65,29 @@ class ScreencastSpider(Spider):
                 item['video'] = self.root_url + node.xpath('a/@href').extract()[0]
                 item['title'] = sel.xpath('//div[@class="section-header order"]/h2/text()').extract()[0]
                 break
+
+        # download video, it we haven't already
+        dlpath = settings.DOWNLOAD_PATH
+        video_path = os.path.join(dlpath, item.video_name())
+        if os.path.exists(video_path):
+            self.log("%s already downloaded" % item['title'])
+            return item
+        else:
+            request = Request(item['video'], callback=self.video_downloaded)
+            request.meta['item'] = item
+            return request
+
+
+    def video_downloaded(self, response):
+        dlpath = settings.DOWNLOAD_PATH
+        item = response.meta['item']
+        video_path = os.path.expanduser(os.path.join(dlpath, item.video_name()))
+
+        if not os.path.exists(dlpath):
+            os.makedirs(dlpath)
+
+        with open(video_path, 'w') as f:
+            f.write(response.body)
+        spider.log('Successfully downloaded to %s' % video_path)
+
         return item
