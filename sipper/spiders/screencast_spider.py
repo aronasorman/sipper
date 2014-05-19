@@ -23,7 +23,7 @@ class ScreencastSpider(Spider):
                     'username': settings.USERNAME,
                     'password': settings.PASSWORD,
                 },
-            callback=self.after_login,
+                callback=self.after_login,
             )]
 
 
@@ -49,7 +49,6 @@ class ScreencastSpider(Spider):
             items.append(Request(detail_link,
                                  callback=self.parse_screencast_detail))
         return items
-
 
     def parse_screencast_detail(self, response):
         self.log("Parsing %s" % response.url, level=logging.INFO)
@@ -77,7 +76,6 @@ class ScreencastSpider(Spider):
             request.meta['item'] = item
             return request
 
-
     def video_downloaded(self, response):
         dlpath = settings.DOWNLOAD_PATH
         item = response.meta['item']
@@ -88,6 +86,6 @@ class ScreencastSpider(Spider):
 
         with open(video_path, 'w') as f:
             f.write(response.body)
-        spider.log('Successfully downloaded to %s' % video_path)
+        self.log('Successfully downloaded to %s' % video_path)
 
         return item
